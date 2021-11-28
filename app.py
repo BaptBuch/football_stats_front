@@ -335,13 +335,14 @@ with st.expander('All done ?'):
         # Add a placeholder
         latest_iteration = st.empty()
         bar = st.progress(0)
+        url = 'https://footballstats-psjvb4atra-ew.a.run.app/predict'
+        result = requests.get(url=url,
+                              params=result_dictionary).json()['Prediction']
         for i in range(100):
             # Update the progress bar with each iteration.
             latest_iteration.text(f'{i+1} % done')
             bar.progress(i + 1)
-            time.sleep(0.01)
-        url = 'https://footballstats-psjvb4atra-ew.a.run.app/predict'
-        result = requests.get(url=url, params=result_dictionary).json()['Prediction']
+            time.sleep(0.03)
         for key in result:
             st.write(f"{key}: {result.get(key)}")
 
