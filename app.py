@@ -3,7 +3,6 @@ import requests
 import time
 import pandas as pd
 import plot
-import matplotlib.pyplot as plt
 
 
 columns = [

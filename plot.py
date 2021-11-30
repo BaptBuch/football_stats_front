@@ -1,5 +1,4 @@
 from mplsoccer.pitch import Pitch
-import matplotlib.pyplot as plt
 from io import BytesIO
 import streamlit as st
 
