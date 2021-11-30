@@ -29,7 +29,7 @@ option_profil = st.selectbox(
 ######################## BOX lEAGUE SAISON ############################
 if option_profil == 'For the stats !':
     with st.container():
-        # st.write('staaaaats quests')
+        st.write('staaaaats quests')
         # st.write('You selected:', option_profil)
         # col1, col2 = st.columns([1,1])
         # with col1:
@@ -67,15 +67,15 @@ if option_profil == 'For the stats !':
         # df = get_select_box_data()
 
         # stats = st.selectbox('Select une stat', df['stats'])
-        df_subs_false = pd.read_csv('df_subs_false.csv')
-        df_subs_true = pd.read_csv('df_subs_true.csv')
-        with plt.style.context('Solarize_Light2'):
-            fig, ax = plt.subplots(2,2)
-            plt.figure()
-            ax.hist(df_subs_false['minute'], bins=8, range=(0, 95))
-            ax.hist(df_subs_true['minute'], bins=8, range=(0,95))
+        # df_subs_false = pd.read_csv('df_subs_false.csv')
+        # df_subs_true = pd.read_csv('df_subs_true.csv')
+        # with plt.style.context('Solarize_Light2'):
+        #     fig, ax = plt.subplots(2,2)
+        #     plt.figure()
+        #     ax.hist(df_subs_false['minute'], bins=8, range=(0, 95))
+        #     ax.hist(df_subs_true['minute'], bins=8, range=(0,95))
 
-            st.pyplot(fig)
+        #     st.pyplot(fig)
 
     ##################### BOX lEAGUE PREDICTIONS #########################
 elif option_profil == 'For the predictions !':
@@ -155,9 +155,9 @@ elif option_profil == 'For the predictions !':
         col1, col2 = st.columns(2)
         with col1:
             if home_or_away == "Home":
-                Home_D_start = st.slider('How many defensive players do you have ?',1,6,4,key=1)
-                Home_M_start = st.slider('How many midfield players do you have ?',1,6,3,key=12)
-                Home_A_start = st.slider('How many offensive players do you have ?',1,6,3,key=13)
+                Home_D_start = st.slider('How many defensive players do you have ?',1,5,4,key=1)
+                Home_M_start = st.slider('How many midfield players do you have ?',1,5,3,key=12)
+                Home_A_start = st.slider('How many offensive players do you have ?',1,5,3,key=13)
                 if Home_D_start + Home_M_start + Home_A_start > 10:
                     st.write("You can't choose more than 10 field players ! Please adjust your selections")
                     Home_D_start = Home_M_start = Home_A_start = 2
@@ -166,24 +166,24 @@ elif option_profil == 'For the predictions !':
                 if own_tactic_changes == 'Yes':
                     with st.expander("First step: 60'"):
                         st.write("What could be your lineup at 60'? i.e. do you plan to do any changes between 45' and 60'")
-                        Home_D_60 = st.slider('How many defensive players ?',1,6,4,key=17)
-                        Home_M_60 = st.slider('How many midfield players ?',1,6,4,key=18)
-                        Home_A_60 = st.slider('How many offensive players ?',1,6,3,key=19)
+                        Home_D_60 = st.slider('How many defensive players ?',1,5,4,key=17)
+                        Home_M_60 = st.slider('How many midfield players ?',1,5,4,key=18)
+                        Home_A_60 = st.slider('How many offensive players ?',1,5,3,key=19)
                     with st.expander("Second step: 75'"):
                         st.write("What could be your lineup at 75'? i.e. do you plan to do any changes between 60' and 75'")
-                        Home_D_75 = st.slider('How many defensive players ?',1,6,4,key=20)
-                        Home_M_75 = st.slider('How many midfield players ?',1,6,4,key=21)
-                        Home_A_75 = st.slider('How many offensive players ?',1,6,3,key=22)
+                        Home_D_75 = st.slider('How many defensive players ?',1,5,4,key=20)
+                        Home_M_75 = st.slider('How many midfield players ?',1,5,4,key=21)
+                        Home_A_75 = st.slider('How many offensive players ?',1,5,3,key=22)
                     with st.expander("Final step: 90'"):
                         st.write("What could be your lineup at the end of the game?  i.e. do you plan to do any changes after the 75'")
-                        Home_D_final = st.slider('How many defensive players ?',1,6,4,key=23)
-                        Home_M_final = st.slider('How many midfield players ?',1,6,3,key=24)
-                        Home_A_final = st.slider('How many offensive players ?',1,6,3,key=25)
+                        Home_D_final = st.slider('How many defensive players ?',1,5,4,key=23)
+                        Home_M_final = st.slider('How many midfield players ?',1,5,3,key=24)
+                        Home_A_final = st.slider('How many offensive players ?',1,5,3,key=25)
 
             elif home_or_away == "Away":
-                Away_D_start = st.slider('How many defensive players do you have ?',1,6,4,key=14)
-                Away_M_start = st.slider('How many midfield players do you have ?',1,6,3,key=15)
-                Away_A_start = st.slider('How many offensive players do you have ?',1,6,3,key=16)
+                Away_D_start = st.slider('How many defensive players do you have ?',1,5,4,key=14)
+                Away_M_start = st.slider('How many midfield players do you have ?',1,5,3,key=15)
+                Away_A_start = st.slider('How many offensive players do you have ?',1,5,3,key=16)
                 if Away_D_start + Away_M_start + Away_A_start > 10:
                     st.write("You can't choose more than 10 field players ! ")
                     Away_D_start = Away_M_start = Away_A_start = 2
@@ -192,19 +192,19 @@ elif option_profil == 'For the predictions !':
                 if own_tactic_changes == 'Yes':
                     with st.expander("First step: 60'"):
                         st.write("What could be your lineup at 60'? i.e. do you plan to do any changes between 45' and 60'")
-                        Away_D_60 = st.slider('How many defensive players ?',1,6,4,key=26)
-                        Away_M_60 = st.slider('How many midfield players ?',1,6,3,key=27)
-                        Away_A_60 = st.slider('How many offensive players ?',1,6,3,key=28)
+                        Away_D_60 = st.slider('How many defensive players ?',1,5,4,key=26)
+                        Away_M_60 = st.slider('How many midfield players ?',1,5,3,key=27)
+                        Away_A_60 = st.slider('How many offensive players ?',1,5,3,key=28)
                     with st.expander("Second step: 75'"):
                         st.write("What could be your lineup at 75'? i.e. do you plan to do any changes between 60' and 75'")
-                        Away_D_75 = st.slider('How many defensive players ?',1,6,4,key=29)
-                        Away_M_75 = st.slider('How many midfield players ?',1,6,3,key=30)
-                        Away_A_75 = st.slider('How many offensive players ?',1,6,3,key=31)
+                        Away_D_75 = st.slider('How many defensive players ?',1,5,4,key=29)
+                        Away_M_75 = st.slider('How many midfield players ?',1,5,3,key=30)
+                        Away_A_75 = st.slider('How many offensive players ?',1,5,3,key=31)
                     with st.expander("Final step: 90'"):
                         st.write("What could be your lineup at the end of the game?  i.e. do you plan to do any changes after the 75'")
-                        Away_D_final = st.slider('How many defensive players ?',1,6,4,key=32)
-                        Away_M_final = st.slider('How many midfield players ?',1,6,3,key=33)
-                        Away_A_final = st.slider('How many offensive players ?',1,6,3,key=34)
+                        Away_D_final = st.slider('How many defensive players ?',1,5,4,key=32)
+                        Away_M_final = st.slider('How many midfield players ?',1,5,3,key=33)
+                        Away_A_final = st.slider('How many offensive players ?',1,5,3,key=34)
         with col2:
             if home_or_away == "Home":
                 if [Home_D_start, Home_M_start, Home_A_start] == [4,3,3]:
@@ -274,13 +274,13 @@ elif option_profil == 'For the predictions !':
         col1, col2 = st.columns(2)
         with col1:
             if home_or_away == "Home":
-                Away_D_start = st.slider('How many defensive players your opponent starts with ?',1,6,4,key=35)
-                Away_M_start = st.slider('How many midfield players your opponent starts with ?',1,6,3,key=36)
-                Away_A_start = st.slider('How many offensive players your opponent starts with ?',1,6,3,key=37)
+                Away_D_start = st.slider('How many defensive players your opponent starts with ?',1,5,4,key=35)
+                Away_M_start = st.slider('How many midfield players your opponent starts with ?',1,5,3,key=36)
+                Away_A_start = st.slider('How many offensive players your opponent starts with ?',1,5,3,key=37)
             elif home_or_away == "Away":
-                Away_D_start = st.slider('How many defensive players your opponent starts with ?',1,6,4,key=38)
-                Away_M_start = st.slider('How many midfield players your opponent starts with ?',1,6,3,key=39)
-                Away_A_start = st.slider('How many offensive players your opponent starts with ?',1,6,3,key=40)
+                Away_D_start = st.slider('How many defensive players your opponent starts with ?',1,5,4,key=38)
+                Away_M_start = st.slider('How many midfield players your opponent starts with ?',1,5,3,key=39)
+                Away_A_start = st.slider('How many offensive players your opponent starts with ?',1,5,3,key=40)
             opp_tactic_changes = st.radio(
                 "Do you know if your opponent is used to do some tactical changes at some point in the game ?",
                 ('No', 'Yes'))
@@ -288,35 +288,35 @@ elif option_profil == 'For the predictions !':
                 if home_or_away == "Away":
                     with st.expander("First step: 60'"):
                         st.write("What could be their lineup at 60'?")
-                        Home_D_60 = st.slider('How many defensive players ?',1,6,4,key=41)
-                        Home_M_60 = st.slider('How many midfield players ?', 1,6,3,key=42)
-                        Home_A_60 = st.slider('How many offensive players ?',1,6,3,key=43)
+                        Home_D_60 = st.slider('How many defensive players ?',1,5,4,key=41)
+                        Home_M_60 = st.slider('How many midfield players ?', 1,5,3,key=42)
+                        Home_A_60 = st.slider('How many offensive players ?',1,5,3,key=43)
                     with st.expander("Second step: 75'"):
                         st.write("What could be their lineup at 75'?")
-                        Home_D_75 = st.slider('How many defensive players ?',1,6,4,key=44)
-                        Home_M_75 = st.slider('How many midfield players ?', 1,6,3,key=45)
-                        Home_A_75 = st.slider('How many offensive players ?',1,6,3,key=46)
+                        Home_D_75 = st.slider('How many defensive players ?',1,5,4,key=44)
+                        Home_M_75 = st.slider('How many midfield players ?', 1,5,3,key=45)
+                        Home_A_75 = st.slider('How many offensive players ?',1,5,3,key=46)
                     with st.expander("Final step: 90'"):
                         st.write("What could be their lineup at end time?")
-                        Home_D_final = st.slider('How many defensive players ?',1,6,4,key=47)
-                        Home_M_final = st.slider('How many midfield players ?',1,6,3,key=48)
-                        Home_A_final = st.slider('How many offensive players ?',1,6,3,key=49)
+                        Home_D_final = st.slider('How many defensive players ?',1,5,4,key=47)
+                        Home_M_final = st.slider('How many midfield players ?',1,5,3,key=48)
+                        Home_A_final = st.slider('How many offensive players ?',1,5,3,key=49)
                 if home_or_away == "Home":
                     with st.expander("First step: 60'"):
                         st.write("What could be their lineup at 60'?")
-                        Away_D_60 = st.slider('How many defensive players ?',1,6,4,key=50)
-                        Away_M_60 = st.slider('How many midfield players ?', 1,6,3,key=51)
-                        Away_A_60 = st.slider('How many offensive players ?',1,6,3,key=52)
+                        Away_D_60 = st.slider('How many defensive players ?',1,5,4,key=50)
+                        Away_M_60 = st.slider('How many midfield players ?', 1,5,3,key=51)
+                        Away_A_60 = st.slider('How many offensive players ?',1,5,3,key=52)
                     with st.expander("Second step: 75'"):
                         st.write("What could be their lineup at 75'?")
-                        Away_D_75 = st.slider('How many defensive players ?',1,6,4,key=53)
-                        Away_M_75 = st.slider('How many midfield players ?', 1,6,3,key=54)
-                        Away_A_75 = st.slider('How many offensive players ?',1,6,3,key=55)
+                        Away_D_75 = st.slider('How many defensive players ?',1,5,4,key=53)
+                        Away_M_75 = st.slider('How many midfield players ?', 1,5,3,key=54)
+                        Away_A_75 = st.slider('How many offensive players ?',1,5,3,key=55)
                     with st.expander("Final step: 90'"):
                         st.write("What could be their lineup at end time?")
-                        Away_D_final = st.slider('How many defensive players ?',1,6,4,key=56)
-                        Away_M_final = st.slider('How many midfield players ?',1,6,3,key=57)
-                        Away_A_final = st.slider('How many offensive players ?', 1,6,3,key=58)
+                        Away_D_final = st.slider('How many defensive players ?',1,5,4,key=56)
+                        Away_M_final = st.slider('How many midfield players ?',1,5,3,key=57)
+                        Away_A_final = st.slider('How many offensive players ?', 1,5,3,key=58)
 
         with col2:
             if home_or_away == "Away":
@@ -400,9 +400,9 @@ elif option_profil == 'For the predictions !':
                     if h_ht_changes:
                         st.write("What's your new lineup'?")
                         Home_D_ht = Home_M_ht = Home_A_ht = 0
-                        Home_D_ht = st.slider('How many defensive players ?',1,6,4, key=62)
-                        Home_M_ht = st.slider('How many midfield players ?',1,6,3, key=63)
-                        Home_A_ht = st.slider('How many offensive players ?',1,6,3, key=64)
+                        Home_D_ht = st.slider('How many defensive players ?',1,5,4, key=62)
+                        Home_M_ht = st.slider('How many midfield players ?',1,5,3, key=63)
+                        Home_A_ht = st.slider('How many offensive players ?',1,5,3, key=64)
                         if Home_D_ht + Home_M_ht + Home_A_ht > 10:
                             st.write("You can't choose more than 10 field players ! ")
 
@@ -413,9 +413,9 @@ elif option_profil == 'For the predictions !':
                     if a_ht_changes:
                         st.write("What's the new lineup'?")
                         Away_D_ht= Away_M_ht= Away_A_ht = 0
-                        Away_D_ht = st.slider('How many defensive players ?',1,6,4, key=65)
-                        Away_M_ht = st.slider('How many midfield players ?',1,6,3, key=66)
-                        Away_A_ht = st.slider('How many offensive players ?',1,6,3, key=67)
+                        Away_D_ht = st.slider('How many defensive players ?',1,5,4, key=65)
+                        Away_M_ht = st.slider('How many midfield players ?',1,5,3, key=66)
+                        Away_A_ht = st.slider('How many offensive players ?',1,5,3, key=67)
                         if Away_D_ht + Away_M_ht + Away_A_ht > 10:
                             st.write("You can't choose more than 10 field players ! ")
 
@@ -434,11 +434,11 @@ elif option_profil == 'For the predictions !':
                     h_ht_changes = st.checkbox('Did your opponent do substitutions before or at half time ?',
                         key=97)
                     if h_ht_changes:
-                        h_d_ht = st.slider('How many defensive players ?',1,6,4, key=70)
+                        h_d_ht = st.slider('How many defensive players ?',1,5,4, key=70)
                         Home_D_ht = h_d_ht
-                        h_m_ht = st.slider('How many midfield players ?',1,6,3, key=74)
+                        h_m_ht = st.slider('How many midfield players ?',1,5,3, key=74)
                         Home_M_ht = h_m_ht
-                        h_a_ht = st.slider('How many offensive players ?',1,6,3, key=72)
+                        h_a_ht = st.slider('How many offensive players ?',1,5,3, key=72)
                         Home_A_ht = h_a_ht
                         if Home_D_ht + Home_M_ht + Home_A_ht > 10:
                             st.write("You can't choose more than 10 field players ! ")
@@ -447,9 +447,9 @@ elif option_profil == 'For the predictions !':
                     if a_ht_changes:
                         st.write("What's the new lineup'?")
                         Away_D_ht= Away_M_ht= Away_A_ht = 0
-                        Away_D_ht = st.slider('How many defensive players ?',1,6,4, key=74)
-                        Away_M_ht = st.slider('How many midfield players ?',1,6,3, key=75)
-                        Away_A_ht = st.slider('How many offensive players ?',1,6,3, key=76)
+                        Away_D_ht = st.slider('How many defensive players ?',1,5,4, key=74)
+                        Away_M_ht = st.slider('How many midfield players ?',1,5,3, key=75)
+                        Away_A_ht = st.slider('How many offensive players ?',1,5,3, key=76)
                         if Away_D_ht + Away_M_ht + Away_A_ht > 10:
                             st.write("You can't choose more than 10 field players ! ")
 
@@ -491,7 +491,7 @@ elif option_profil == 'For the predictions !':
                         if own_tactic_changes == 'No':
                             lineups = [[4, 4, 2], [4, 3, 3], [5, 3, 2],
                                        [4, 2, 4], [2, 3, 5], [4, 5, 1],
-                                       [5, 4, 1], [3, 4, 3]]  #
+                                       [5, 4, 1], [3, 4, 3]]
                             st.write("As you didn't choose any substitutions options for the second half, we made some predictions for you. ")
                             if home_or_away == "Home":
                                 if [Home_D_start, Home_M_start, Home_A_start] in lineups:
