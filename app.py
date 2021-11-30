@@ -538,4 +538,6 @@ elif option_profil == 'For the predictions !':
                                                 f"{key}: {addl_result.get(key)}"
                                             )
                                             dict_plot[str(lineup)].append(addl_result.get(key)-result.get(key))
-                        st.line_chart(df)
+                    st.line_chart(df[['diff_h_a', 'base']])
+                    # st.line_chart(df[['base', 'prob_a']])
+                    # st.line_chart(df[['base', 'prob_d']])
