@@ -2,6 +2,9 @@ import streamlit as st
 import requests
 import time
 import pandas as pd
+import plot
+import matplotlib.pyplot as plt
+
 
 columns = [
     'result_ht', 'Home_D_start', 'Home_M_start', 'Home_A_start',
@@ -14,7 +17,8 @@ columns = [
 ]
 Home_D_start = Home_M_start =Home_A_start =Away_D_start =Away_M_start = Away_A_start =Home_D_ht =Home_M_ht =Home_A_ht =Away_D_ht =Away_M_ht =Away_A_ht =Home_D_60 =Home_M_60 =Home_A_60 =Away_D_60 =Away_M_60 =Away_A_60 =Home_D_75 =Home_M_75 =Home_A_75 =Away_D_75 =Away_M_75 =Away_A_75 =Home_D_final =Home_M_final =Home_A_final =Away_D_final =Away_M_final =Away_A_final = 0
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title='Football stats',layout="wide")
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 ######################Sélection du profil###########################
 
@@ -25,44 +29,53 @@ option_profil = st.selectbox(
 ######################## BOX lEAGUE SAISON ############################
 if option_profil == 'For the stats !':
     with st.container():
-        st.write('staaaaats quests')
-        st.write('You selected:', option_profil)
-        col1, col2 = st.columns([1,1])
-        with col1:
-            options = st.multiselect('Select a league',['Ligue 1', 'Premier league', 'Championship', 'Liga', 'Bundesliga', 'Serie A', 'Eredevise'])
-            st.write('You selected:', ", ".join(options))
+        # st.write('staaaaats quests')
+        # st.write('You selected:', option_profil)
+        # col1, col2 = st.columns([1,1])
+        # with col1:
+        #     options = st.multiselect('Select a league',['Ligue 1', 'Premier league', 'Championship', 'Liga', 'Bundesliga', 'Serie A', 'Eredevise'])
+        #     st.write('You selected:', ", ".join(options))
 
-            if 'Ligue 1' in options:
-                st.image("https://seeklogo.com/images/L/ligue-1-uber-eats-logo-E440240623-seeklogo.com.png",width=100)
-            if 'Premier league' in options:
-                st.image("https://seeklogo.com/images/P/premier-league-logo-B2889F3974-seeklogo.com.png",width=100)
-            if 'Championship' in options:
-                st.image("https://seeklogo.com/images/S/sky-bet-championship-logo-C4F6910987-seeklogo.com.png",width=100)
-            if 'Liga' in options:
-                st.image("https://seeklogo.com/images/L/la-liga-logo-0530344B7E-seeklogo.com.png",width=100)
-            if 'Bundesliga' in options:
-                st.image("https://seeklogo.com/images/B/bundesliga-logo-CA4C5CF312-seeklogo.com.png",width=100)
-            if 'Serie A' in options:
-                st.image("https://seeklogo.com/images/S/serie-a-logo-59D3C46AE5-seeklogo.com.png",width=100)
-            if 'Eredevise' in options:
-                st.image("https://seeklogo.com/images/E/eredivisie-logo-24C3DB32E5-seeklogo.com.png",width=100)
-            # se:
-            #     st.write('◀️')
-        with col2:
-            saison = st.radio('Select a saison', ('2015/2016', '2016/2017', '2017/2018', '2018/2019', '2019/2020', '2020/2021'))
+        #     if 'Ligue 1' in options:
+        #         st.image("https://seeklogo.com/images/L/ligue-1-uber-eats-logo-E440240623-seeklogo.com.png",width=100)
+        #     if 'Premier league' in options:
+        #         st.image("https://seeklogo.com/images/P/premier-league-logo-B2889F3974-seeklogo.com.png",width=100)
+        #     if 'Championship' in options:
+        #         st.image("https://seeklogo.com/images/S/sky-bet-championship-logo-C4F6910987-seeklogo.com.png",width=100)
+        #     if 'Liga' in options:
+        #         st.image("https://seeklogo.com/images/L/la-liga-logo-0530344B7E-seeklogo.com.png",width=100)
+        #     if 'Bundesliga' in options:
+        #         st.image("https://seeklogo.com/images/B/bundesliga-logo-CA4C5CF312-seeklogo.com.png",width=100)
+        #     if 'Serie A' in options:
+        #         st.image("https://seeklogo.com/images/S/serie-a-logo-59D3C46AE5-seeklogo.com.png",width=100)
+        #     if 'Eredevise' in options:
+        #         st.image("https://seeklogo.com/images/E/eredivisie-logo-24C3DB32E5-seeklogo.com.png",width=100)
+        #     # se:
+        #     #     st.write('◀️')
+        # with col2:
+        #     saison = st.radio('Select a saison', ('2015/2016', '2016/2017', '2017/2018', '2018/2019', '2019/2020', '2020/2021'))
         ######################## MENU DEROULANT ############################
 
-        @st.cache
+        # @st.cache
 
-        def get_select_box_data():
+        # def get_select_box_data():
 
-            return pd.DataFrame({
-                'stats': ["Nombre de remplacant","Minutes jouées / remplacants", "Nombre de blessure", "Retournement de situation", "..." ],
-                })
+        #     return pd.DataFrame({
+        #         'stats': ["Nombre de remplacant","Minutes jouées / remplacants", "Nombre de blessure", "Retournement de situation", "..." ],
+        #         })
 
-        df = get_select_box_data()
+        # df = get_select_box_data()
 
-        stats = st.selectbox('Select une stat', df['stats'])
+        # stats = st.selectbox('Select une stat', df['stats'])
+        df_subs_false = pd.read_csv('df_subs_false.csv')
+        df_subs_true = pd.read_csv('df_subs_true.csv')
+        with plt.style.context('Solarize_Light2'):
+            fig, ax = plt.subplots(2,2)
+            plt.figure()
+            ax.hist(df_subs_false['minute'], bins=8, range=(0, 95))
+            ax.hist(df_subs_true['minute'], bins=8, range=(0,95))
+
+            st.pyplot(fig)
 
     ##################### BOX lEAGUE PREDICTIONS #########################
 elif option_profil == 'For the predictions !':
@@ -146,21 +159,11 @@ elif option_profil == 'For the predictions !':
                 Home_M_start = st.slider('How many midfield players do you have ?',1,6,3,key=12)
                 Home_A_start = st.slider('How many offensive players do you have ?',1,6,3,key=13)
                 if Home_D_start + Home_M_start + Home_A_start > 10:
-                    st.write("You can't choose more than 10 field players ! ")
+                    st.write("You can't choose more than 10 field players ! Please adjust your selections")
                     Home_D_start = Home_M_start = Home_A_start = 2
-
-            elif home_or_away == "Away":
-                Away_D_start = st.slider('How many defensive players do you have ?',1,6,4,key=14)
-                Away_M_start = st.slider('How many midfield players do you have ?',1,6,3,key=15)
-                Away_A_start = st.slider('How many offensive players do you have ?',1,6,3,key=16)
-                if Away_D_start + Away_M_start + Away_A_start > 10:
-                    st.write("You can't choose more than 10 field players ! ")
-                    Away_D_start = Away_M_start = Away_A_start = 2
-        with col2:
-            own_tactic_changes = st.radio(
+                own_tactic_changes = st.radio(
                 "Have you planned to change your lineups at some point in the game ?",('No', 'Yes'))
-            if own_tactic_changes == 'Yes':
-                if home_or_away == "Home":
+                if own_tactic_changes == 'Yes':
                     with st.expander("First step: 60'"):
                         st.write("What could be your lineup at 60'? i.e. do you plan to do any changes between 45' and 60'")
                         Home_D_60 = st.slider('How many defensive players ?',1,6,4,key=17)
@@ -177,7 +180,16 @@ elif option_profil == 'For the predictions !':
                         Home_M_final = st.slider('How many midfield players ?',1,6,3,key=24)
                         Home_A_final = st.slider('How many offensive players ?',1,6,3,key=25)
 
-                if home_or_away == "Away":
+            elif home_or_away == "Away":
+                Away_D_start = st.slider('How many defensive players do you have ?',1,6,4,key=14)
+                Away_M_start = st.slider('How many midfield players do you have ?',1,6,3,key=15)
+                Away_A_start = st.slider('How many offensive players do you have ?',1,6,3,key=16)
+                if Away_D_start + Away_M_start + Away_A_start > 10:
+                    st.write("You can't choose more than 10 field players ! ")
+                    Away_D_start = Away_M_start = Away_A_start = 2
+                own_tactic_changes = st.radio(
+                "Have you planned to change your lineups at some point in the game ?",('No', 'Yes'))
+                if own_tactic_changes == 'Yes':
                     with st.expander("First step: 60'"):
                         st.write("What could be your lineup at 60'? i.e. do you plan to do any changes between 45' and 60'")
                         Away_D_60 = st.slider('How many defensive players ?',1,6,4,key=26)
@@ -193,12 +205,69 @@ elif option_profil == 'For the predictions !':
                         Away_D_final = st.slider('How many defensive players ?',1,6,4,key=32)
                         Away_M_final = st.slider('How many midfield players ?',1,6,3,key=33)
                         Away_A_final = st.slider('How many offensive players ?',1,6,3,key=34)
-
-            else:
-                if home_or_away == "Home":
-                    [Home_D_60, Home_M_60, Home_A_60] = [Home_D_75, Home_M_75, Home_A_75] = [Home_D_final, Home_M_final, Home_A_final] = [Home_D_start, Home_M_start, Home_A_start]
-                elif home_or_away == "Away":
-                    [Away_D_60, Away_M_60, Away_A_60] = [Away_D_75, Away_M_75, Away_A_75] = [Away_D_final, Away_M_final, Away_A_final] = [Away_D_start, Away_M_start, Away_A_start]
+        with col2:
+            if home_or_away == "Home":
+                if [Home_D_start, Home_M_start, Home_A_start] == [4,3,3]:
+                    x_home, y_home= plot.get_433_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                elif [Home_D_start, Home_M_start, Home_A_start] == [3,4,3]:
+                    x_home, y_home = plot.get_343_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                elif [Home_D_start, Home_M_start, Home_A_start] == [4,4,2]:
+                    x_home, y_home = plot.get_442_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                elif [Home_D_start, Home_M_start, Home_A_start] == [5,3,2]:
+                    x_home, y_home = plot.get_532_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                elif [Home_D_start, Home_M_start, Home_A_start] == [4,2,4]:
+                    x_home, y_home = plot.get_424_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                elif [Home_D_start, Home_M_start, Home_A_start] == [3,5,2]:
+                    x_home, y_home = plot.get_352_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                elif [Home_D_start, Home_M_start, Home_A_start] == [4,5,1]:
+                    x_home, y_home = plot.get_451_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                elif [Home_D_start, Home_M_start, Home_A_start] == [5,4,1]:
+                    x_home, y_home = plot.get_541_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                else:
+                    x_home, y_home= plot.get_433_home()
+                    plot.plot_lineup(x_home, y_home, [], [])
+                    st.write('Please check your lineups, it seems that you selected too much or too few players.')
+                [Home_D_60, Home_M_60, Home_A_60] = [Home_D_75, Home_M_75, Home_A_75] = [Home_D_final, Home_M_final, Home_A_final] = [Home_D_start, Home_M_start, Home_A_start]
+            elif home_or_away == "Away":
+                if [Away_D_start, Away_M_start, Away_A_start] == [4, 3, 3]:
+                    x_away, y_away = plot.get_433_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                elif [Away_D_start, Away_M_start, Away_A_start] == [3, 4, 3]:
+                    x_away, y_away = plot.get_343_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                elif [Away_D_start, Away_M_start, Away_A_start] == [4, 4, 2]:
+                    x_away, y_away = plot.get_442_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                elif [Away_D_start, Away_M_start, Away_A_start] == [5, 3, 2]:
+                    x_away, y_away = plot.get_532_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                elif [Away_D_start, Away_M_start, Away_A_start] == [4, 2, 4]:
+                    x_away, y_away = plot.get_424_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                elif [Away_D_start, Away_M_start, Away_A_start] == [3, 5, 2]:
+                    x_away, y_away = plot.get_352_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                elif [Away_D_start, Away_M_start, Away_A_start] == [4, 5, 1]:
+                    x_away, y_away = plot.get_451_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                elif [Away_D_start, Away_M_start, Away_A_start] == [5, 4, 1]:
+                    x_away, y_away = plot.get_541_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                else:
+                    x_away, y_away = plot.get_433_away()
+                    plot.plot_lineup(x_away, y_away, [], [])
+                    st.write(
+                        'Please check your lineups, it seems that you selected too much or too few players.'
+                    )
+                [Away_D_60, Away_M_60, Away_A_60] = [Away_D_75, Away_M_75, Away_A_75] = [Away_D_final, Away_M_final, Away_A_final] = [Away_D_start, Away_M_start, Away_A_start]
 
         #################  Third section  ###################
         st.header('3) Information about your opponent')
@@ -212,8 +281,6 @@ elif option_profil == 'For the predictions !':
                 Away_D_start = st.slider('How many defensive players your opponent starts with ?',1,6,4,key=38)
                 Away_M_start = st.slider('How many midfield players your opponent starts with ?',1,6,3,key=39)
                 Away_A_start = st.slider('How many offensive players your opponent starts with ?',1,6,3,key=40)
-
-        with col2:
             opp_tactic_changes = st.radio(
                 "Do you know if your opponent is used to do some tactical changes at some point in the game ?",
                 ('No', 'Yes'))
@@ -250,11 +317,68 @@ elif option_profil == 'For the predictions !':
                         Away_D_final = st.slider('How many defensive players ?',1,6,4,key=56)
                         Away_M_final = st.slider('How many midfield players ?',1,6,3,key=57)
                         Away_A_final = st.slider('How many offensive players ?', 1,6,3,key=58)
-            else:
-                if home_or_away == "Home":
-                    [Home_D_ht, Home_M_ht, Home_A_ht] = [Home_D_60, Home_M_60, Home_A_60] = [Home_D_75, Home_M_75, Home_A_75] = [Home_D_final, Home_M_final, Home_A_final] = [Home_D_start, Home_M_start, Home_A_start]
-                elif home_or_away == "Away":
-                    [Away_D_ht, Away_M_ht, Away_A_ht] = [Away_D_60, Away_M_60, Away_A_60] = [Away_D_75, Away_M_75, Away_A_75] = [Away_D_final, Away_M_final, Away_A_final] = [Away_D_start, Away_M_start, Away_A_start]
+
+        with col2:
+            if home_or_away == "Away":
+                if [Home_D_start, Home_M_start, Home_A_start] == [4,3,3]:
+                    x_home, y_home= plot.get_433_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Home_D_start, Home_M_start, Home_A_start] == [4,4,2]:
+                    x_home, y_home = plot.get_442_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Home_D_start, Home_M_start, Home_A_start] == [5,3,2]:
+                    x_home, y_home = plot.get_532_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Home_D_start, Home_M_start, Home_A_start] == [4,2,4]:
+                    x_home, y_home = plot.get_424_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Home_D_start, Home_M_start, Home_A_start] == [3,5,2]:
+                    x_home, y_home = plot.get_352_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Home_D_start, Home_M_start, Home_A_start] == [3,4,3]:
+                    x_home, y_home = plot.get_343_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Home_D_start, Home_M_start, Home_A_start] == [4,5,1]:
+                    x_home, y_home = plot.get_451_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Home_D_start, Home_M_start, Home_A_start] == [5,4,1]:
+                    x_home, y_home = plot.get_541_home()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                else:
+                    st.write(
+                        'Please check your lineups, it seems that you selected too much or too few players.'
+                    )
+                [Home_D_60, Home_M_60, Home_A_60] = [Home_D_75, Home_M_75, Home_A_75] = [Home_D_final, Home_M_final, Home_A_final] = [Home_D_start, Home_M_start, Home_A_start]
+            elif home_or_away == "Home":
+                if [Away_D_start, Away_M_start, Away_A_start] == [4, 3, 3]:
+                    x_away, y_away = plot.get_433_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Away_D_start, Away_M_start,Away_A_start] == [4, 4, 2]:
+                    x_away, y_away = plot.get_442_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Away_D_start, Away_M_start,Away_A_start] == [5, 3, 2]:
+                    x_away, y_away = plot.get_532_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Away_D_start, Away_M_start,Away_A_start] == [4, 2, 4]:
+                    x_away, y_away = plot.get_424_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Away_D_start, Away_M_start,Away_A_start] == [3, 5, 2]:
+                    x_away, y_away = plot.get_352_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Away_D_start, Away_M_start,Away_A_start] == [5, 4, 1]:
+                    x_away, y_away = plot.get_541_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Away_D_start, Away_M_start,Away_A_start] == [4,5, 1]:
+                    x_away, y_away = plot.get_451_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                elif [Away_D_start, Away_M_start, Away_A_start] == [3,4, 3]:
+                    x_away, y_away = plot.get_433_away()
+                    plot.plot_lineup(x_home, y_home, x_away, y_away)
+                else:
+                    st.write(
+                        'Please check your lineups, it seems that you selected too much or too few players.'
+                    )
+                [Away_D_60, Away_M_60, Away_A_60] = [Away_D_75, Away_M_75, Away_A_75] = [Away_D_final, Away_M_final, Away_A_final] = [Away_D_start, Away_M_start, Away_A_start]
 
         #################  4th section  ###################
         st.header('4) Information about your game')
@@ -339,6 +463,7 @@ elif option_profil == 'For the predictions !':
         ]
         result_dictionary = dict(zip(columns, y))
         col1, col2 = st.columns(2)
+        dict_plot={}
         if (Home_D_start+ Home_M_start+ Home_A_start> 10) or (Away_D_start+
         Away_M_start+ Away_A_start>10) or (Home_D_ht+ Home_M_ht+ Home_A_ht>10) or (Away_D_ht+
         Away_M_ht+ Away_A_ht>10) or (Home_D_60+ Home_M_60+ Home_A_60>10) or (Away_D_60+
@@ -361,15 +486,18 @@ elif option_profil == 'For the predictions !':
                         bar.progress(i + 1)
                         time.sleep(0.03)
                     for key in result:
-                        st.write(f"{key}: {result.get(key)}")
+                        st.write(f"{key}: {result.get(key)}%")
                     with col2:
                         if own_tactic_changes == 'No':
-                            lineups = [[4, 4, 2], [4, 3, 3], [5, 3, 2],[4,2,4],[2,3,5]]
+                            lineups = [[4, 4, 2], [4, 3, 3], [5, 3, 2],
+                                       [4, 2, 4], [2, 3, 5], [4, 5, 1],
+                                       [5, 4, 1], [3, 4, 3]]  #
                             st.write("As you didn't choose any substitutions options for the second half, we made some predictions for you. ")
                             if home_or_away == "Home":
                                 if [Home_D_start, Home_M_start, Home_A_start] in lineups:
                                     lineups.remove([Home_D_start, Home_M_start, Home_A_start])
                                 for lineup in lineups:
+                                    dict_plot[str(lineup)] = []
                                     y = [result_ht, Home_D_start, Home_M_start, Home_A_start, Away_D_start,
                                         Away_M_start, Away_A_start, Home_D_ht, Home_M_ht, Home_A_ht, Away_D_ht,
                                         Away_M_ht, Away_A_ht, lineup[0], lineup[1], lineup[2], Away_D_60,
@@ -378,15 +506,22 @@ elif option_profil == 'For the predictions !':
                                         Away_D_final, Away_M_final, Away_A_final]
                                     result_dictionary = dict(zip(columns, y))
                                     url = 'https://footballstats-psjvb4atra-ew.a.run.app/predict'
-                                    result = requests.get(url=url,
+                                    addl_result = requests.get(url=url,
                                         params=result_dictionary).json()['Prediction']
                                     with st.expander(f'Our predictions if you move to a {lineup} tactic'):
-                                        for key in result:
-                                            st.write(f"{key}: {result.get(key)}")
+                                        for key in addl_result:
+                                            st.write(f"{key}: {addl_result.get(key)}%")
+                                            dict_plot[str(lineup)].append((addl_result.get(key)-result.get(key)))
+                                df = pd.DataFrame(dict_plot)
+                                df = df.T
+                                df['base']=0
+                                df = df.rename(columns={0:'prob_h',1:'prob_a',2:'prob_d'})
+                                df['diff_h_a']=df['prob_h']-df['prob_a']
                             elif home_or_away == 'Away':
                                 if [Away_D_start, Away_M_start, Away_A_start] in lineups:
                                     lineups = lineups.remove([Away_D_start, Away_M_start, Away_A_start])
                                 for lineup in lineups:
+                                    dict_plot[str(lineup)]=[]
                                     y = [result_ht, Home_D_start, Home_M_start, Home_A_start, Away_D_start,
                                         Away_M_start, Away_A_start, Home_D_ht, Home_M_ht, Home_A_ht, Away_D_ht,
                                         Away_M_ht, Away_A_ht, lineup[0], lineup[1], lineup[2], Away_D_60,
@@ -395,8 +530,12 @@ elif option_profil == 'For the predictions !':
                                         Away_D_final, Away_M_final, Away_A_final]
                                     result_dictionary = dict(zip(columns, y))
                                     url = 'https://footballstats-psjvb4atra-ew.a.run.app/predict'
-                                    result = requests.get(url=url,
+                                    addl_result = requests.get(url=url,
                                         params=result_dictionary).json()['Prediction']
                                     with st.expander(f'Our predictions if you move to a {lineup} tactic'):
-                                        for key in result:
-                                            st.write(f"{key}: {result.get(key)}")
+                                        for key in addl_result:
+                                            st.write(
+                                                f"{key}: {addl_result.get(key)}"
+                                            )
+                                            dict_plot[str(lineup)].append(addl_result.get(key)-result.get(key))
+                        st.line_chart(df)
